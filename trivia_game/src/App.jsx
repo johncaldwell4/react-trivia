@@ -1,7 +1,7 @@
-
+import { useState } from "react"
 import './App.css'
 import Header from './Header.jsx'
-import Card from './Card..jsx'
+import Card from './Card.jsx'
 
 
 const triviaQuestions = [
@@ -29,28 +29,60 @@ const triviaQuestions = [
 
 function App() {
   
+  const [count, setCount] = useState(() => {
+    console.log("Clicked") 
+    return 0
+  })
+
+  function decrementCount(){
+      
+      if (count >= 1) {
+        setCount(prevCount => prevCount - 1)
+      } 
+    
+  }
+
+  function incrementCount(){
+    if (count <= 18) {
+      setCount(prevCount => prevCount + 1)
+    }
+  }
 
   return(
     <>
-      <div className='main-nav'>
-        <Header />
-      </div>
+      {/* Head react component */}
+       <div className='main-nav'>
+          <Header />
+       </div>
+      {/* End Head react component */}
 
+
+      {/* Content and Card Components */}
       <div className='content'>
 
-        {triviaQuestions.map((question) => {
+         <Card 
 
-          return (
-            <Card 
-            key={question.title}
-            title={question.title}
-            question={question.question}
-            answer={question.answer} 
-          />
-          )})
-        }
+              key={triviaQuestions[count].title}
+
+              title={triviaQuestions[count].title}
+              question={triviaQuestions[count].question}
+              answer={triviaQuestions[count].answer}
+
+              />
 
       </div>
+      {/* End Content and Card Components */}
+      
+      <div className='bottom'>
+        <div className='footer'>
+            <div className="previous-question">
+              <button onClick={decrementCount}>Previous</button>
+            </div> 
+            <div className="next-question">
+                  <button onClick={incrementCount}>Next</button>
+              </div>
+          </div>
+        </div>
     </>
   )
     
